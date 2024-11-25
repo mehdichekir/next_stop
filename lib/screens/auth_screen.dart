@@ -14,6 +14,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   var isLoading = false;
+  bool isLogin = false;
   final auth = FirebaseAuth.instance;
 
   /// Function to handle form submission for login or signup
@@ -113,24 +114,45 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(300),
-        child: AppBar(
-          title: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Image.asset('assets/logo.png',height: 1000,),
-              const Text('Sign In')
-            ],
-          ),
-          backgroundColor: Colors.lightBlue,
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue,
+      ),
+      backgroundColor: Colors.lightBlue,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              color: Colors.lightBlue,
+              height: 200,
+              width: double.maxFinite,
+              child: Image.asset(
+                'assets/logo.png',
+                height: 200, // Reduced height
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(0),
+                ),
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(width: 2, color: Colors.black), // Border on top
+                  left: BorderSide(width: 2, color: Colors.black), // Border on left
+                  right: BorderSide(width: 2, color: Colors.black), // Border on right
+                ),
+              ),
+              child: AuthForm(
+                submitAuthForm,
+                isLogin,
+                requestAdminAccount,
+              ),
+            ),
+          ],
         ),
-      ) ,
-      backgroundColor: Colors.white,
-      body: AuthForm(
-        submitAuthForm,
-        isLoading,
-        requestAdminAccount, 
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:transport_app/screens/auth_screen.dart';
 import 'package:transport_app/screens/choose_mean_screen.dart';
+import 'package:transport_app/screens/homeScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           print('id=${userSnapshot.data!.uid}');
           return ChooseMeanScreen(userSnapshot.data!.uid);
         }
-        return AuthScreen();
+        return HomePage();
       },),
     );
   }
