@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold,
-                          color: Colors.orangeAccent,
+                          color: Colors.blue,
                         ),
                       ),
                       SizedBox(height: 10),
@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 28.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.orange,
+                        color: Colors.blue,
                       ),
                       textAlign: TextAlign.center,
                     ),

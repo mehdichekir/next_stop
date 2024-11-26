@@ -381,7 +381,7 @@ Future<void> sendAdminRequestEmail(String email,String password,String name) asy
                         child: const Text("Request Admin Account"),
                       ),
                     if(isLogin)
-                      const SizedBox(height: 70,)
+                      const SizedBox(height: 100,)
                   ],
                 ),
               ),
