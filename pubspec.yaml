@@ -71,6 +71,8 @@ flutter:
     - assets/train-no-bg.png
     - assets/metro-no-bg.png
     - assets/logo.png
+    - assets/greeting_image.jpg
+    - assets/logo-no-bg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
