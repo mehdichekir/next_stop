@@ -6,6 +6,7 @@ import 'package:location/location.dart';
 import 'package:transport_app/widgets/mean_of_transport.dart';
 
 class ChooseMeanScreen extends StatefulWidget {
+  static const routeName = '/choose_Mean_Screen';
   final String userId;
   const ChooseMeanScreen(this.userId);
 
@@ -138,31 +139,33 @@ class _ChooseMeanScreenState extends State<ChooseMeanScreen> {
         toolbarHeight: 200,
       ),
       body:
-         Stack(
-           children:[
-            Container(
-              alignment: Alignment.bottomCenter,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30)
-              )
-            ),
-             child: const Column(children: [
-              SizedBox(height: 40,),
-              MeanOfTransport(title: 'Bus',imageAsset:  'assets/blue-bus-no-bg.png'),
-              MeanOfTransport(title: 'Metro',imageAsset:'assets/metro-no-bg.png'),
-              MeanOfTransport(title: 'Train',imageAsset: 'assets/train-no-bg.png')
-                     ],),
+         SingleChildScrollView(
+           child: Stack(
+             children:[
+              Container(
+                alignment: Alignment.bottomCenter,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30)
+                )
+              ),
+               child: const Column(children: [
+                SizedBox(height: 40,),
+                MeanOfTransport(title: 'Bus',imageAsset:  'assets/blue-bus-no-bg.png'),
+                MeanOfTransport(title: 'Metro',imageAsset:'assets/metro-no-bg.png'),
+                MeanOfTransport(title: 'Train',imageAsset: 'assets/train-no-bg.png')
+                       ],),
+             ),
+             Container(
+              alignment: Alignment.topLeft,
+              margin: const EdgeInsets.only(left: 30,top: 7),
+              child: const Text(
+                'Choose Your Transport',
+                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
+             )
+             ] 
            ),
-           Container(
-            alignment: Alignment.topLeft,
-            margin: const EdgeInsets.only(left: 30,top: 7),
-            child: const Text(
-              'Choose Your Transport',
-              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)
-           )
-           ] 
          ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
- import 'package:mailer/mailer.dart';
+import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 class AuthForm extends StatefulWidget {
   final bool isLoading;
@@ -158,37 +158,81 @@ Future<void> sendAdminRequestEmail(String email,String password,String name) asy
   );
 }
 
-
-
-
-@override
-void dispose() {
-  emailController.dispose();
-  super.dispose();
-}
-
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(isLogin?'Login':'Signup',style: const TextStyle(
-          fontSize: 25,
-          fontWeight: FontWeight.bold,
-        ),),
-        SizedBox(height: 5,),
-        const Text('Please Enter Your Credentials Below'),
-        Container(
-            margin: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
+    return  SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+              margin: const EdgeInsets.all(8),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Form(
                   key: formKey,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(
+                        width: double.infinity,
+                       child: Text(
+                         isLogin ? "Login" : "Sign Up",
+                         textAlign: TextAlign.center,
+                         style: const TextStyle(
+                             fontSize: 24,
+                             fontWeight: FontWeight.bold),
+                       ),
+                      ),
+                      if (!isLogin)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 16,),
+                            const Text(
+                              "User Name",
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextFormField(
+                              key: const ValueKey('username'),
+                              validator: (value) {
+                                if (value!.isEmpty || value.length < 4) {
+                                  return 'Username must be at least 4 characters long';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                  prefixIcon: const Icon(Icons.person),
+                                  labelText: 'Username',
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(0)
+                                  )
+                              ),
+                              onSaved: (value) {
+                                userName = value!;
+                              },
+                            ),
+                            const SizedBox(height: 16,),
+                          ],
+                        ),
+                      const Text(
+                        "Email",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
                       TextFormField(
                         key: const ValueKey('email'),
                         validator: (value) {
@@ -199,34 +243,27 @@ void dispose() {
                         },
                         keyboardType: TextInputType.emailAddress,
                         decoration:
-                             InputDecoration(labelText: 'Email Address',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(0)
-                            )),
+                            InputDecoration(
+                              prefixIcon: const Icon(Icons.email),
+                              labelText: 'name@example.com',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(0)
+                              )
+                            ),
                         onSaved: (value) {
                           userEmail = value!;
                         },
                       ),
                       const SizedBox(height: 16,),
-                      if (!isLogin)
-                        TextFormField(
-                          key: const ValueKey('username'),
-                          validator: (value) {
-                            if (value!.isEmpty || value.length < 4) {
-                              return 'Username must be at least 4 characters long';
-                            }
-                            return null;
-                          },
-                          decoration:  InputDecoration(labelText: 'Username',
-                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(0)
-                            )),
-                          onSaved: (value) {
-                            userName = value!;
-                          },
+      
+                      const Text(
+                        "Password",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
-                        if(!isLogin)
-                        const SizedBox(height: 16,),
+                      ),
+                      const SizedBox(height: 4),
                       TextFormField(
                         key: const ValueKey('password'),
                         validator: (value) {
@@ -235,23 +272,79 @@ void dispose() {
                           }
                           return null;
                         },
-                        decoration:  InputDecoration(labelText: 'Password',
-                         border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(0)
-                            )),
+                        decoration:  InputDecoration(
+                            prefixIcon: const Icon(Icons.lock_rounded),
+                            labelText: '*******',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(0)
+                            )
+                        ),
                         obscureText: true,
                         onSaved: (value) {
                           userPassword = value!;
                         },
                       ),
                       const SizedBox(height: 12),
+                      if(!isLogin)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Confirm Password",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+      
+                            TextFormField(
+                              key: const ValueKey('confirm_password'),
+                              validator: (value) {
+                                if (value!.isEmpty || value.length < 7) {
+                                  return 'Password must be at least 7 characters long';
+                                }
+                                return null;
+                              },
+                              decoration:  InputDecoration(
+                                  prefixIcon: const Icon(Icons.lock_rounded),
+                                  labelText: '*******',
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(0)
+                                  )
+                              ),
+                              obscureText: true,
+                              onSaved: (value) {
+                                userPassword = value!;
+                              },
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+                        ),
                       if (widget.isLoading)
                         const CircularProgressIndicator(),
                       if (!widget.isLoading)
-                        TextButton(
+                        ElevatedButton(
                           onPressed: trySubmit,
-                          child: Text(isLogin ? 'Login' : 'Sign Up'),
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(320, 50), // Adjust size
+                            textStyle: const TextStyle(fontSize: 16.0), // Font size
+                            backgroundColor: Colors.blue, // Button background color
+                            foregroundColor: Colors.white, // Text color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                            ),
+                            elevation: 0, // Remove shadow if needed
+                          ),
+                          child: Text(isLogin ? 'Sign In' : 'Sign Up'),
                         ),
+                      const SizedBox(height: 16),
+                      Text(
+                        isLogin ? "  New to the App ?" : "  Have an Account ?",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                       if (!widget.isLoading)
                         ElevatedButton(
                           onPressed: () {
@@ -259,24 +352,45 @@ void dispose() {
                               isLogin = !isLogin;
                             });
                           },
-                          child: Text(
-                            isLogin ? 'Create New Account' : 'Login Instead',
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(320, 50), // Adjust size
+                            textStyle: const TextStyle(fontSize: 16.0), // Font size
+                            backgroundColor: Colors.blue, // Button background color
+                            foregroundColor: Colors.white, // Text color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                            ),
+                            elevation: 0, // Remove shadow if needed
                           ),
-                        ),
-                      const SizedBox(height: 10),
-                      if (!widget.isLoading)
+                          child: Text(
+                            isLogin ? 'Sign Up' : 'Sign In',
+                          ),                        ),
+                      const SizedBox(height: 16),
+                      if(!isLogin)
                         ElevatedButton(
                           onPressed: requestAdminAccount,
-                          child: const Text('Request Admin Account'),
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(320, 50), // Adjust size
+                            textStyle: const TextStyle(fontSize: 16.0), // Font size
+                            backgroundColor: Colors.blue, // Button background color
+                            foregroundColor: Colors.white, // Text color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                            ),
+                            elevation: 0, // Remove shadow if needed
+                          ),
+                          child: const Text("Request Admin Account"),
                         ),
+                      if(isLogin)
+                        const SizedBox(height: 100,)
                     ],
                   ),
                 ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
-    
+
   }
 }

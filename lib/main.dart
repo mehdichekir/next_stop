@@ -1,9 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'package:transport_app/providers/auht_wrapper.dart';
 import 'package:transport_app/screens/Reservation_validated_screen.dart';
-import 'package:transport_app/screens/auth_screen.dart';
-import 'package:transport_app/screens/choose_mean_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ReservationValidatedScreen()
+      home: ReservationValidatedScreen(),
+      routes: {},
     );
   }
 }
